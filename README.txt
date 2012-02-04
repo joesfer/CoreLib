@@ -23,3 +23,25 @@ License:
 	You should have received a copy of the GNU Lesser General Public
 	License along with this library; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+	
+Compilation:
+
+	- Clone the git repository into a local folder:
+
+		mkdir <corelib_folder>
+		cd <corelib_folder>
+		git clone git://github.com/joesfer/CoreLib.git 
+	
+	- Build CoreLib using CMake:
+
+		cd <corelib_folder>
+		mkdir .build
+		cd .build
+		cmake ..
+
+		Under windows: cmake will generate a Visual studio solution on .build
+		Under linux: cmake will generate a GCC makefile
+
+		Build the library. If everything went well, a new folder structure 
+		<corelib_folder>/lib containing the static library 
+		should have been generated.
