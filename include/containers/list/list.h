@@ -20,6 +20,12 @@
 	================================================================================
 */
 
+//////////////////////////////////////////////////////////////////////////
+// Note: the List class is based on code from the idLib, which is released 
+// under GPL license. Since I'm releasing my code under LGPL license, I may 
+// have to remove it or change it at some point due to license incompatibilities.
+//////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include <stdlib.h>
 #include <assert.h>
@@ -29,6 +35,12 @@ namespace CoreLib {
 	template< typename T >
 	inline int ListSortCompare( const T *a, const T *b ) { return *a - *b; }
 
+	//////////////////////////////////////////////////////////////////////////
+	// class List
+	//
+	// Similar to std::vector, but allowing for more efficient element removal
+	// copy and granularity control.
+	//////////////////////////////////////////////////////////////////////////
 	template< typename T, class Allocator = CoreLib::Memory::StandardAllocator<T> >
 	class List {
 	public:
@@ -89,123 +101,3 @@ namespace CoreLib {
 
 	#include "List.inl"
 }
-#if 0
-namespace idLib {
-	/*
-	================
-	ListSortCompare
-	================
-	*/
-	template< class type >
-	inline int ListSortCompare( const type *a, const type *b ) {
-		return *a - *b;
-	}
-
-	/*
-	================
-	class List
-	================
-	*/
-	template< class type, class AllocPolicy = StandardAllocator< type > >
-	class idList {
-	public:
-		typedef const type		ConstType;
-		typedef type			Type;
-		typedef Type*			Iterator;
-		typedef ConstType*		ConstIterator;
-		typedef int				cmp_t( const type *, const type * );
-
-		static const int		DEFAULT_GRANULARITY = 16;
-
-		explicit		idList( int newgranularity = DEFAULT_GRANULARITY );
-		idList( const idList &other );
-
-		template< class Iter >	
-		explicit		idList( Iter begin, Iter end ) :
-			list( NULL ), 
-			allocedSize( 0 ),
-			granularity( DEFAULT_GRANULARITY ),
-			allocator( NULL ) {
-				Clear();
-				CopyFromRange( begin, end );
-		}
-
-		~idList( void );
-
-		void			Clear( void );										// clear the list
-		int				Num( void ) const;									// returns number of elements in list
-		bool			Empty( void ) const;								// returns true if number elements in list is 0
-		void			SetGranularity( int newgranularity );				// set new granularity
-		int				GetGranularity( void ) const;						// get the current granularity
-
-		size_t			Allocated( void ) const;							// returns total allocedSize of allocated memory
-		size_t			Size( void ) const;									// returns total allocedSize of allocated memory including allocedSize of list type
-		size_t			MemoryUsed( void ) const;							// returns allocedSize of the used elements in the list
-
-		idList&			operator=( const idList &other );
-		type &			operator[]( int index );
-		const type &	operator[]( int index ) const;	
-
-		//void			Condense( void );									// resizes list to exactly the number of elements it contains
-		void			Resize( int newsize );								// resizes list to the given number of elements
-		void			Resize( int newsize, int newgranularity );			// resizes list and sets new granularity
-		void			SetNum( int newnum, bool resize = true );			// set number of elements in list and resize to exactly this number if necessary
-		void			AssureSize( int newSize );							// assure list has given number of elements, but leave them uninitialized
-		void			AssureSize( int newSize, const type &initValue );	// assure list has given number of elements and initialize any new elements
-		void			PreAllocate( int newSize );
-
-		type &			Alloc( void );										// returns reference to a new data element at the end of the list
-		int				Append( const type & obj );							// append element
-		int				Append( const idList &other );						// append list
-		int				AddUnique( const type & obj );						// add unique element
-		int				Insert( const type & obj, int index = 0 );			// insert the element at the given index	
-
-		template< typename T >
-		int				FindIndex( T obj ) const;				// find the index for the given element
-		int				FindIndexBinary( const type & key, cmp_t *compare = &ListSortCompare<type> ) const;
-		type *			FindElement( const type & obj ) const;				// find pointer to the given element
-		int				FindNull( void ) const;								// find the index for the first NULL pointer in the list
-
-		void			Fill( int numElements, const type & obj );			// resize the list, if neccessary and set all items to obj
-
-		int				IndexOf( const type *obj ) const;					// returns the index for the pointer to an element in the list
-		bool			RemoveIndex( int index );							// remove the element at the given index
-		bool			RemoveIndexFast( int index );						// remove the element at the given index and put the last element into its spot
-		bool			Remove( const type & obj );							// remove the element
-		bool			RemoveFast( const type & obj );						// remove the element, move the last element into its spot
-		void			Sort( cmp_t *compare = ListSortCompare<type> );	// sort the list
-		void			Swap( idList &other );								// swap the contents of the lists
-
-		// members for compatibility with STL algorithms
-		Iterator		Begin( void );										// return list[ 0 ]
-		Iterator		End( void );										// return list[ numElements ]	(one past end)
-
-		ConstIterator	Begin( void ) const;								// return list[ 0 ]
-		ConstIterator	End( void ) const;									// return list[ numElements ]	(one past end)
-
-		type&			Front();											// return *list[ 0 ]
-		const type&		Front() const;										// return *list[ 0 ]
-
-		type&			Back();												// return *list[ numElements - 1 ]
-		const type&		Back() const;										// return *list[ numElements - 1 ]
-
-		bool			Remove( Iterator iter );
-
-		template< class Iter >
-		void			CopyFromRange( Iter begin, Iter end ) {
-			AssureSize( end - begin );
-			for( int i = 0; i < numElements; i++, ++begin ) {
-				list[ i ] = *begin;
-			}
-		}
-	protected:
-		type *			list;
-		int				numElements;
-		int				allocedSize;
-		int				granularity;
-	};
-
-	#include "List.inl"
-}
-
-#endif

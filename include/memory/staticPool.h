@@ -26,19 +26,18 @@
 namespace CoreLib {
 namespace Memory {
 
-	/*
-	================
-	class StaticMemoryPool
-	Allocates a static chunk of memory once, and allocates memory from it
-	the mem pool is deleted at once when the allocator is destroyed
-	================
-	*/
+	////////////////////////////////////////////////////////////////////////////
+	// class StaticMemoryPool
+	// Allocates a static chunk of memory once, and allocates memory from it
+	// the mem pool is deleted at once when the allocator is destroyed
+	////////////////////////////////////////////////////////////////////////////
+
 	class StaticMemoryPoolBase {
 	public:
-		static void Init( int poolSize );
-		static void Destroy();
+		static void init( int poolSize );
+		static void destroy();
 		
-		static void ClearMemory(); // Wipes the memory chunk without freeing the memory and resets the allocator internal state. Call this before reusing the pool.
+		static void clearMemory(); // Wipes the memory chunk without freeing the memory and resets the allocator internal state. Call this before reusing the pool.
 		
 	protected:
 		static char*				memory;

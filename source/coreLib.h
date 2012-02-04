@@ -22,29 +22,8 @@
 
 #pragma once
 
-namespace CoreLib {
-namespace Memory {
+#define WIN32_LEAN_AND_MEAN
 
-	////////////////////////////////////////////////////////////////////////////
-	// StandardAllocator
-	//
-	// Use the standard heap allocation
-	////////////////////////////////////////////////////////////////////////////
-	template< class T >
-	class StandardAllocator {
-	public:
-		inline static T* alloc( size_t count ) {
-			return new T[ count ];
-		}
+#include "containers/list/list.h"
 
-		inline static void free( T* objects ) {
-			delete[] objects;
-		}
-
-		inline static void free( T* objects, size_t count ) {
-			count; // avoid 'unreferenced parameter' warning
-			delete[] objects;
-		}
-	};
-}
-}
+#include "memory/standardAllocator.h"

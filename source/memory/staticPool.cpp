@@ -31,40 +31,34 @@ char*  StaticMemoryPoolBase::memory = NULL;
 int StaticMemoryPoolBase::size = 0;
 int StaticMemoryPoolBase::used = 0;
 
-/*
-================
-StaticMemoryPool::Init
-================
-*/
-void StaticMemoryPoolBase::Init( int poolSize ) {
+////////////////////////////////////////////////////////////////////////////////
+//StaticMemoryPool::init
+////////////////////////////////////////////////////////////////////////////////
+void StaticMemoryPoolBase::init( int poolSize ) {
 	assert( poolSize > 0 );
 	size = poolSize;
 	memory = (char*)malloc( size );
 	used = 0;
 }
 
-/*
-================
-StaticMemoryPool::Destroy
-================
-*/
-void StaticMemoryPoolBase::Destroy() {
-	ClearMemory();
+////////////////////////////////////////////////////////////////////////////////
+// StaticMemoryPool::destroy
+////////////////////////////////////////////////////////////////////////////////
+void StaticMemoryPoolBase::destroy() {
+	clearMemory();
 	if ( memory != NULL ) {
 		free( memory );
 		memory = NULL;
 	}
 }
 
-/*
-================
-StaticMemoryPool::ClearMemory
-
-Wipes the memory chunk without freeing the memory and resets the 
-allocator internal state. Call this before reusing the pool.
-================
-*/
-void StaticMemoryPoolBase::ClearMemory() {
+////////////////////////////////////////////////////////////////////////////////
+// StaticMemoryPool::clearMemory
+//
+// Wipes the memory chunk without freeing the memory and resets the 
+// allocator internal state. Call this before reusing the pool.
+////////////////////////////////////////////////////////////////////////////////
+void StaticMemoryPoolBase::clearMemory() {
 #if _DEBUG
 	if ( used > 0 ) {
 		memset( memory, 0xFF, used );
