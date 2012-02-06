@@ -22,7 +22,7 @@ function(create_source_group sourceGroupName relativeSourcePath)
 	endforeach(currentSourceFile ${ARGN})
 endfunction(create_source_group)
 
-file(GLOB_RECURSE app_sources source/*.c source/*.cpp source/*.h source/*.inl source/*.hpp source/*.glsl source/*.ui)
+file(GLOB_RECURSE app_sources include/*.h source/*.c source/*.cpp source/*.h source/*.inl source/*.hpp source/*.glsl source/*.ui)
 
 # mimic disk folder structure on the project
 create_source_group( "" "${CMAKE_CURRENT_SOURCE_DIR}/source" ${app_sources} )
