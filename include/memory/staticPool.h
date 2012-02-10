@@ -80,8 +80,8 @@ namespace Memory {
 			return ptr;
 		};
 
-		inline static void free( T* objects ) { /* do nothing */ }
-		inline static void free( T* objects, int count ) { /* do nothing */ }
+		inline static void free( T* ) { /* do nothing */ }
+		inline static void free( T* , int ) { /* do nothing */ }
 
 	private:
 		template< class U >
