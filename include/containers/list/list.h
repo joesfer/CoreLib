@@ -29,6 +29,7 @@
 #pragma once
 #include <stdlib.h>
 #include <assert.h>
+#include <algorithm>
 #include <memory/standardAllocator.h>
 
 namespace CoreLib {

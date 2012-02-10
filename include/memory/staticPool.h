@@ -99,25 +99,25 @@ namespace Memory {
 			T* ptr = reinterpret_cast< T* >( memory + used );
 			used += required;
 			return ptr;
-		};
+                }
 	};
 
 	template<>
-	inline static int* StaticMemoryPool<int>::alloc( int count ) {
+        int* StaticMemoryPool<int>::alloc( int count ) {
 		return allocIntegralType<int>( count );
-	};
+        }
 	template<>
-	inline static float* StaticMemoryPool<float>::alloc( int count ) {
+        float* StaticMemoryPool<float>::alloc( int count ) {
 		return allocIntegralType<float>( count );
-	};
+        }
 	template<>
-	inline static double* StaticMemoryPool< double >::alloc( int count ) {
+        double* StaticMemoryPool< double >::alloc( int count ) {
 		return allocIntegralType<double>( count );
-	};
+        }
 	template<>
-	inline static char* StaticMemoryPool< char >::alloc( int count ) {
+        char* StaticMemoryPool< char >::alloc( int count ) {
 		return allocIntegralType<char>( count );
-	};
+        }
 
 } // namespace Memory
 } // namespace CoreLib
