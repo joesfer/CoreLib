@@ -58,7 +58,7 @@ inline List< type, AllocPolicy >::~List( void ) {
 //////////////////////////////////////////////////////////////////////////
 template< typename type, class AllocPolicy >
 inline void List< type, AllocPolicy >::clear() {
-	AllocPolicy::free( list, allocedSize );
+	AllocPolicy::free( list, (int)allocedSize );
 	list		= NULL;
 	numElements	= 0;
 	allocedSize	= 0;	
@@ -144,7 +144,7 @@ inline void List< type, AllocPolicy >::setSize( size_t newsize ) {
 	}
 
 	type* temp	= list;
-	int oldAllocedSize = allocedSize;
+	size_t oldAllocedSize = allocedSize;
 	allocedSize		= newsize;
 	if ( allocedSize < numElements ) {
 		numElements = allocedSize;
@@ -237,6 +237,55 @@ inline type &List< type, AllocPolicy >::operator[]( int index ) {
 	return list[ index ];
 }
 
+
+//////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[] const
+//
+// Access operator.  Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline const type &List< type, AllocPolicy >::operator[]( size_t index ) const {
+	assert( index < numElements );
+	return list[ index ];
+}
+
+//////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[]
+//	
+// Access operator.	Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline type &List< type, AllocPolicy >::operator[]( size_t index ) {
+	assert( index < numElements );
+	return list[ index ];
+}
+
+//////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[] const
+//
+// Access operator.  Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline const type &List< type, AllocPolicy >::operator[]( unsigned int index ) const {
+	assert( index < numElements );
+	return list[ index ];
+}
+
+//////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[]
+//	
+// Access operator.	Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline type &List< type, AllocPolicy >::operator[]( unsigned int index ) {
+	assert( index < numElements );
+	return list[ index ];
+}
+
 //////////////////////////////////////////////////////////////////////////
 // List< type, AllocPolicy >::append
 //
@@ -274,8 +323,7 @@ inline int List< type, AllocPolicy >::append( type const & obj ) {
 	}
 
 	if ( numElements == allocedSize ) {
-		int newsize;
-
+		size_t newsize;
 		newsize = allocedSize + granularity;
 		setSize( newsize - newsize % granularity );
 	}
@@ -283,7 +331,7 @@ inline int List< type, AllocPolicy >::append( type const & obj ) {
 	list[ numElements ] = obj;
 	numElements++;
 
-	return numElements - 1;
+	return (int)(numElements - 1);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -311,7 +359,7 @@ inline int List< type, AllocPolicy >::append( const List &other ) {
 		append( other[i] );
 	}
 
-	return size();
+	return (int)size();
 }
 
 //////////////////////////////////////////////////////////////////////////
