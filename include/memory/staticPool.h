@@ -34,25 +34,25 @@ namespace Memory {
 
 	class StaticMemoryPoolBase {
 	public:
-		static void init( int poolSize );
+		static void init( size_t poolSize );
 		static void destroy();
 		
 		static void clearMemory(); // Wipes the memory chunk without freeing the memory and resets the allocator internal state. Call this before reusing the pool.
 		
 	protected:
 		static char*				memory;
-		static int				size;
-		static int				used;
+		static size_t				size;
+		static size_t				used;
 	};
 	
 	template< class T, int alignment = 4 >
 	class StaticMemoryPool : protected StaticMemoryPoolBase {
 	public:
 		
-		inline static T* alloc( int count ) {
-			const int bytes = count * sizeof(T);
-			const int padding = bytes % alignment;
-			const int required = bytes + padding;
+		inline static T* alloc( size_t count ) {
+			const size_t bytes = count * sizeof(T);
+			const size_t padding = bytes % alignment;
+			const size_t required = bytes + padding;
 			
 			// the array version of placement new stores extra information
 			// at the beginning of the provided buffer corresponding to the  
@@ -81,17 +81,17 @@ namespace Memory {
 		};
 
 		inline static void free( T* ) { /* do nothing */ }
-		inline static void free( T* , int ) { /* do nothing */ }
+		inline static void free( T* , size_t ) { /* do nothing */ }
 
 	private:
 		template< class U >
-		inline static U* allocIntegralType( int count ) {
+		inline static U* allocIntegralType( size_t count ) {
 			// besides the requested space, we'll need to add some extra padding
 			// because "new" will return a pointer aligned with the requested type
 			// which might slightly shifted from "memory + used"
-			const int bytes = count * sizeof(T);
-			const int padding = bytes % alignment;
-			const int required = bytes + padding;
+			const size_t bytes = count * sizeof(T);
+			const size_t padding = bytes % alignment;
+			const size_t required = bytes + padding;
 			if ( used + required >= size ) {
 				return NULL; 
 			}
@@ -103,19 +103,19 @@ namespace Memory {
 	};
 
 	template<>
-        int* StaticMemoryPool<int>::alloc( int count ) {
+        int* StaticMemoryPool<int>::alloc( size_t count ) {
 		return allocIntegralType<int>( count );
         }
 	template<>
-        float* StaticMemoryPool<float>::alloc( int count ) {
+        float* StaticMemoryPool<float>::alloc( size_t count ) {
 		return allocIntegralType<float>( count );
         }
 	template<>
-        double* StaticMemoryPool< double >::alloc( int count ) {
+        double* StaticMemoryPool< double >::alloc( size_t count ) {
 		return allocIntegralType<double>( count );
         }
 	template<>
-        char* StaticMemoryPool< char >::alloc( int count ) {
+        char* StaticMemoryPool< char >::alloc( size_t count ) {
 		return allocIntegralType<char>( count );
         }
 
