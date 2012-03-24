@@ -274,9 +274,7 @@ inline int List< type, AllocPolicy >::append( type const & obj ) {
 	}
 
 	if ( numElements == allocedSize ) {
-		int newsize;
-
-		newsize = allocedSize + granularity;
+		size_t newsize = allocedSize + granularity;
 		setSize( newsize - newsize % granularity );
 	}
 
