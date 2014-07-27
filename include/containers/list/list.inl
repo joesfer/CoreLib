@@ -238,6 +238,54 @@ inline type &List< type, AllocPolicy >::operator[]( int index ) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[] const
+//
+// Access operator.  Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline const type &List< type, AllocPolicy >::operator[]( unsigned int index ) const {
+	assert( index < (unsigned int)numElements );
+	return list[ index ];
+}
+
+//////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[]
+//	
+// Access operator.	Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline type &List< type, AllocPolicy >::operator[]( unsigned int index ) {
+	assert( index < (unsigned int)numElements );
+	return list[ index ];
+}
+
+//////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[] const
+//
+// Access operator.  Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline const type &List< type, AllocPolicy >::operator[]( size_t index ) const {
+	assert( index < numElements );
+	return list[ index ];
+}
+
+//////////////////////////////////////////////////////////////////////////
+// List< type, AllocPolicy >::operator[]
+//	
+// Access operator.	Index must be within range or an assert will be issued 
+// in debug builds. Release builds do no range checking.
+//////////////////////////////////////////////////////////////////////////
+template< typename type, class AllocPolicy >
+inline type &List< type, AllocPolicy >::operator[]( size_t index ) {
+	assert( index < numElements );
+	return list[ index ];
+}
+
+//////////////////////////////////////////////////////////////////////////
 // List< type, AllocPolicy >::append
 //
 // Returns a reference to a new data element at the end of the list.

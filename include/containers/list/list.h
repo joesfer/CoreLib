@@ -69,6 +69,8 @@ namespace CoreLib {
 		List&			operator=( const List& other );
 		Type&			operator[]( int index );
 		ConstType&		operator[]( int index ) const;	
+		Type&			operator[]( size_t index );
+		ConstType&		operator[]( size_t index ) const;	
 		Type&			operator[]( unsigned int index );
 		ConstType&		operator[]( unsigned int index ) const;	
 
