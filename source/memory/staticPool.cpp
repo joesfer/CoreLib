@@ -67,6 +67,25 @@ void StaticMemoryPoolBase::clearMemory() {
 	used = 0;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
+template<>
+int* /*static*/ StaticMemoryPool<int>::alloc( size_t count ) {
+	return allocIntegralType<int>( count );
+}
+template<>
+float* /*static*/ StaticMemoryPool<float>::alloc( size_t count ) {
+	return allocIntegralType<float>( count );
+}
+template<>
+double* /*static*/ StaticMemoryPool< double >::alloc( size_t count ) {
+	return allocIntegralType<double>( count );
+}
+template<>
+char* /*static*/ StaticMemoryPool< char >::alloc( size_t count ) {
+	return allocIntegralType<char>( count );
+}
+
 } // namespace Memory
 } // namespace CoreLib
 

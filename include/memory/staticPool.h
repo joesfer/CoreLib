@@ -49,7 +49,7 @@ namespace Memory {
 	class StaticMemoryPool : protected StaticMemoryPoolBase {
 	public:
 		
-		inline static T* alloc( size_t count ) {
+		 static T* alloc( size_t count ) {
 			const size_t bytes = count * sizeof(T);
 			const size_t padding = bytes % alignment;
 			const size_t required = bytes + padding;
@@ -85,7 +85,7 @@ namespace Memory {
 
 	private:
 		template< class U >
-		inline static U* allocIntegralType( size_t count ) {
+		static U* allocIntegralType( size_t count ) {
 			// besides the requested space, we'll need to add some extra padding
 			// because "new" will return a pointer aligned with the requested type
 			// which might slightly shifted from "memory + used"
@@ -99,25 +99,8 @@ namespace Memory {
 			T* ptr = reinterpret_cast< T* >( memory + used );
 			used += required;
 			return ptr;
-                }
+		}
 	};
-
-	template<>
-        int* StaticMemoryPool<int>::alloc( size_t count ) {
-		return allocIntegralType<int>( count );
-        }
-	template<>
-        float* StaticMemoryPool<float>::alloc( size_t count ) {
-		return allocIntegralType<float>( count );
-        }
-	template<>
-        double* StaticMemoryPool< double >::alloc( size_t count ) {
-		return allocIntegralType<double>( count );
-        }
-	template<>
-        char* StaticMemoryPool< char >::alloc( size_t count ) {
-		return allocIntegralType<char>( count );
-        }
 
 } // namespace Memory
 } // namespace CoreLib
