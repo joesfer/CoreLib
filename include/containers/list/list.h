@@ -102,5 +102,5 @@ namespace CoreLib {
 		const static size_t DEFAULT_GRANULARITY = 16;
 	};
 
-	#include "List.inl"
+	#include "list.inl"
 }

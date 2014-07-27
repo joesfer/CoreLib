@@ -28,13 +28,13 @@ namespace CoreLib {
 namespace Memory {
 
 char*  StaticMemoryPoolBase::memory = NULL;
-int StaticMemoryPoolBase::size = 0;
-int StaticMemoryPoolBase::used = 0;
+size_t StaticMemoryPoolBase::size = 0;
+size_t StaticMemoryPoolBase::used = 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 //StaticMemoryPool::init
 ////////////////////////////////////////////////////////////////////////////////
-void StaticMemoryPoolBase::init( int poolSize ) {
+void StaticMemoryPoolBase::init( size_t poolSize ) {
 	assert( poolSize > 0 );
 	size = poolSize;
 	memory = (char*)malloc( size );
