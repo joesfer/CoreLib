@@ -22,6 +22,8 @@
 
 #pragma once
 #include <stdlib.h>
+#include <assert.h>
+#include <iostream>
 
 namespace CoreLib {
 namespace Memory {
@@ -69,6 +71,8 @@ namespace Memory {
 			const int placement_new_baggage = 4; // FIXME! empiric, not portable
 
 			if ( used + required + placement_new_baggage >= size ) {
+                std::cerr << "Ran out of memory on static pool allocator (size = " << size << " bytes)" << std::endl;
+                assert(false);
 				return NULL; 
 			}
 

@@ -41,8 +41,7 @@ namespace Memory {
 			delete[] objects;
 		}
 
-		inline static void free( T* objects, size_t count ) {
-			count; // avoid 'unreferenced parameter' warning
+		inline static void free( T* objects, size_t /*count*/ ) {
 			delete[] objects;
 		}
 	};

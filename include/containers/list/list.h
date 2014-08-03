@@ -97,10 +97,10 @@ namespace CoreLib {
 		void setSize(size_t numElem);
 
 	private:
-		Type *			list;
 		size_t			numElements;
 		size_t			allocedSize;
 		size_t			granularity;
+		Type *			list;
 		const static size_t DEFAULT_GRANULARITY = 16;
 	};
 
