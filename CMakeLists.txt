@@ -22,6 +22,10 @@ function(create_source_group sourceGroupName relativeSourcePath)
 	endforeach(currentSourceFile ${ARGN})
 endfunction(create_source_group)
 
+if(NOT WIN32)
+add_definitions(-fPIC)
+endif()
+
 file(GLOB_RECURSE app_sources include/*.h source/*.c source/*.cpp source/*.h source/*.inl source/*.hpp source/*.glsl source/*.ui)
 
 # mimic disk folder structure on the project
@@ -33,6 +37,10 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_
 #sourceGroups( app_sources )
 add_library(${CORELIB_NAME} STATIC ${app_sources})
 
+if(WIN32)
 set_target_properties( ${CORELIB_NAME} PROPERTIES PREFIX "" )
+else()
+set_target_properties( ${CORELIB_NAME} PROPERTIES PREFIX "lib" )
+endif()
 set_target_properties( ${CORELIB_NAME} PROPERTIES OUTPUT_NAME ${CORELIB_NAME} )
 set_target_properties( ${CORELIB_NAME} PROPERTIES LINKER_LANGUAGE C)
